@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: slack-stargazer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: slack-stargazer
+  template:
+    metadata:
+      labels:
+        app: slack-stargazer
+    spec:
+      containers:
+      - image: ramiro/slack-stargazer
+        name: slack-stargazer
+        env:
+          - name: PORT
+            value: "8080"
+          - name: WEBHOOK_URL
+            valueFrom:
+              secretKeyRef:
+                name: webhook
+                key: url
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: slack-stargazer
+  annotations:
+    dev.okteto.com/auto-ingress: "true"
+spec:
+  type: ClusterIP  
+  ports:
+  - name: "slack-stargazer"
+    port: 8080
+  selector:
+    app: slack-stargazer
