@@ -1,0 +1,20 @@
+on: ["push"]
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@master
+    
+    - name: Login
+      uses: actions-hub/docker/login@master
+      env:
+        DOCKER_USERNAME: ramiro
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}  
+
+    - name: Build
+      uses: okteto/actions/build@v1
+      with:
+        token: ${{ secrets.OKTETO_TOKEN }}
+        tag: ramiro/slack-stargazer:${{ github.sha }}
