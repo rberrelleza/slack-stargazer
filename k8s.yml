@@ -12,6 +12,11 @@ spec:
       labels:
         app: slack-stargazer
     spec:
+      livenessProbe:
+        httpGet:
+          path: /
+          port: 8080
+        initialDelaySeconds: 3
       containers:
       - image: ramiro/slack-stargazer
         name: slack-stargazer
