@@ -12,11 +12,6 @@ spec:
       labels:
         app: slack-stargazer
     spec:
-      livenessProbe:
-        httpGet:
-          path: /
-          port: 8080
-        initialDelaySeconds: 3
       containers:
       - image: ramiro/slack-stargazer
         name: slack-stargazer
@@ -28,6 +23,11 @@ spec:
               secretKeyRef:
                 name: webhook
                 key: url
+        readinessProbe:
+          httpGet:
+            path: "/"
+            port: 8080
+          initialDelaySeconds: 3
 ---
 
 apiVersion: v1
