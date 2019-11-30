@@ -39,7 +39,7 @@ app.post('/', function(req,  response) {
 
 const sendToSlack = (repo, stars, username, url) => {
   const text = [
-    `New Github star for _${repo}_ repo!.`,
+    `New Github star for _${repo}_ repo!`,
     `The *${repo}* repo now has *${stars}* stars! :tada:.`,
     `Your new fan is <${url}|${username}>`
   ].join('\n');
